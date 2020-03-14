@@ -33,7 +33,11 @@ const Todo = () => {
     if (userValue !== "" && isNaN(userValue)) {
       // Pushing into the local state array
       setTodoList([...todoList, userValue]);
+
+      // Hide error message to the user
+      setErrorMessage(false);
     } else {
+      // Show error message to the user
       setErrorMessage(true);
     }
 
