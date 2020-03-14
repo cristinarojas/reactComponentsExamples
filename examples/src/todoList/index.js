@@ -14,6 +14,7 @@ const Todo = () => {
   // Local state
   const [userValue, setUseValue] = useState("");
   const [todoList, setTodoList] = useState([]);
+  const [errorMessage, setErrorMessage] = useState(false);
 
   // Methods
   // Saving user value to local state
@@ -29,9 +30,11 @@ const Todo = () => {
   const addTodo = () => {
 
     // Validating empty input and is not a number
-    if (userValue !== "" && !isNaN(userValue)) {
+    if (userValue !== "" && isNaN(userValue)) {
       // Pushing into the local state array
       setTodoList([...todoList, userValue]);
+    } else {
+      setErrorMessage(true);
     }
 
     // Cleaning userValue every onClick
@@ -71,6 +74,7 @@ const Todo = () => {
       </section>
 
       <section className="todoList">
+        { errorMessage ? <span className="error">Todo list accept only letters</span> : " " }
         <h3>My todo list:</h3>
 
         {

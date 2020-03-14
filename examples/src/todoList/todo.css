@@ -55,3 +55,8 @@
   padding: 0px;
   margin: 0px;
 }
+
+.todoList .error {
+  color: red;
+  font-size: 11px;
+}
