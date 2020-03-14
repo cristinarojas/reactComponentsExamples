@@ -3,8 +3,11 @@
   Functional Components and still hook into class-based features and use them.
 */
 
+// FILTERS, CLOSURES, ASYNC
+
 // Dependencies
 import React,  { useContext, useState, useEffect }  from 'react';
+import axios from 'axios';
 
 // Styles
 import './todo.css';
@@ -20,17 +23,32 @@ const Todo = () => {
   const [userValue, setUseValue] = useState("");
   const [todoList, setTodoList] = useState([]);
   const [errorMessage, setErrorMessage] = useState(false);
+  const [ready, setReady] = useState(false);
 
   // Using the useEffect method
   useEffect(() => {
     console.log("x1") // Like componentDidMount
 
+    // This works like componentDidMount, setting a local state to true
+    // to execute this only the first time that the component was mounted
+    // Note: this fix is because the array in the bottom is not empty.
+    if (!ready) {
+      // Request data using axios library
+      axios.get('https://restcountries.eu/rest/v2/all')
+        .then(res => {
+            console.log(res.data);
+            setReady(true);
+        })
+        .catch(err => {
+            console.log(err.message);
+        })
+    }
+
     if (errorMessage) { // Like componentDidUpdate (with condition)
       console.log("x2")
     }
 
-  }, [errorMessage]) // This array clearly tells react that just call useEffect when fields in me has been changed.
-
+  }, [errorMessage, ready]) // This array clearly tells react that just call useEffect when fields in me has been changed.
 
   // Methods
   // Saving user value to local state
