@@ -18,14 +18,21 @@ const Todo = () => {
   // Methods
   // Saving user value to local state
   const handleUserValue = ({target: { value }}) => {
+    if (!value.trim()) {
+      return
+    }
+
     setUseValue(value)
   }
 
   // Saving the user value
   const addTodo = () => {
 
-    // Pushing into the local state array
-    setTodoList([...todoList, userValue]);
+    // Validating empty input and is not a number
+    if (userValue !== "" && !isNaN(userValue)) {
+      // Pushing into the local state array
+      setTodoList([...todoList, userValue]);
+    }
 
     // Cleaning userValue every onClick
     setUseValue("");
