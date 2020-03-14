@@ -23,7 +23,16 @@ const Todo = () => {
   const [userValue, setUseValue] = useState("");
   const [todoList, setTodoList] = useState([]);
   const [errorMessage, setErrorMessage] = useState(false);
+
   const [ready, setReady] = useState(false);
+
+  const [countries, setCountries] = useState([]);
+  const [typedCountry, setTypedCountry] = useState("");
+  const [countriesResult, setCountriesResults] = useState([]);
+
+  console.log('countries ---->', countries);
+  console.log('typedCountry----->', typedCountry);
+  console.log('countriesResult----->', countriesResult);
 
   // Using the useEffect method
   useEffect(() => {
@@ -36,7 +45,8 @@ const Todo = () => {
       // Request data using axios library
       axios.get('https://restcountries.eu/rest/v2/all')
         .then(res => {
-            console.log(res.data);
+            setCountries(res.data);
+            //console.log(res.data)
             setReady(true);
         })
         .catch(err => {
@@ -77,6 +87,22 @@ const Todo = () => {
 
     // Cleaning userValue every onClick
     setUseValue("");
+  }
+
+  // To handle the filter of the countries
+  const handleCountries = ({ target: { value }}) => {
+
+    // If the user type 3 o more characters in the input
+    if (value.length >= 3) {
+      // Saving user value into local state
+      setTypedCountry(value);
+
+      // Filter the countries with the user value typed
+      const results = countries.filter(country => country.name.toLowerCase().includes(value.toLowerCase()))
+
+      // Saving the final results into the local state
+      setCountriesResults(results);
+    }
   }
 
   return (
@@ -125,6 +151,31 @@ const Todo = () => {
               </ul>
             </>
           ) : ''
+        }
+      </section>
+
+      <section className="filters">
+        <h4>React filters</h4>
+        <span>Filter country by name</span>
+        <input
+          type="text"
+          id="countryName"
+          className="countryInput"
+          autoFocus="autofocus"
+          onChange={handleCountries}
+        />
+
+        <p>Results for: <span>{typedCountry}</span></p>
+        {
+          countriesResult.length > 0 ? (
+            <>
+              <ul>
+                {
+                  countriesResult.map((result, i) => <li key={i}> { result.name } </li>)
+                }
+              </ul>
+            </>
+          ) : ""
         }
       </section>
     </>

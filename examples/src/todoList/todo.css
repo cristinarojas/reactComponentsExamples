@@ -7,6 +7,12 @@
   align-items: flex-start;
 }
 
+.container h1 {
+  font-size: 18px;
+  font-weight: bold;
+  text-decoration: underline;
+}
+
 .container ul {
   padding: 0px;
   margin: 0px;
@@ -34,6 +40,12 @@
   outline: 0;
 }
 
+.form h2 {
+  font-size: 18px;
+  font-weight: bold;
+  text-decoration: underline;
+}
+
 .form .todoButton {
   width: 200px;
   border-radius: 5px;
@@ -59,4 +71,34 @@
 .todoList .error {
   color: red;
   font-size: 11px;
+}
+
+.todoList h3  {
+  font-size: 18px;
+  font-weight: bold;
+  text-decoration: underline;
+}
+
+.filters {
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+}
+
+.filters h4 {
+  font-size: 18px;
+  font-weight: bold;
+  text-decoration: underline;
+}
+
+.filters .countryInput {
+  width: 400px;
+  border-radius: 5px;
+  height: 40px;
+  padding: 10px;
+  margin: 20px;
+  box-sizing: border-box;
+  border: 1px solid gray;
+  font-size: 16px;
+  outline: 0;
 }
