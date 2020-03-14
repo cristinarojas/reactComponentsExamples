@@ -1,5 +1,5 @@
 // Dependencies
-import React,  { useContext }  from 'react';
+import React,  { useContext, useState }  from 'react';
 
 // Styles
 import './todo.css';
@@ -11,8 +11,25 @@ const Todo = () => {
   // Using todoContext
   const { todoExamples } = useContext(TodoContext);
 
-  // Methods
+  // Local state
+  const [userValue, setUseValue] = useState("");
+  const [todoList, setTodoList] = useState([]);
 
+  // Methods
+  // Saving user value to local state
+  const handleUserValue = ({target: { value }}) => {
+    setUseValue(value)
+  }
+
+  // Saving the user value
+  const addTodo = () => {
+
+    // Pushing into the local state array
+    setTodoList([...todoList, userValue]);
+
+    // Cleaning userValue every onClick
+    setUseValue("");
+  }
 
   return (
     <>
@@ -32,7 +49,9 @@ const Todo = () => {
           placeholder="Insert todo"
           id="todoInputText"
           className="todoText"
-          autofocus="autofocus"
+          autoFocus="autofocus"
+          value={userValue}
+          onChange={handleUserValue}
         />
 
         <input
@@ -40,11 +59,24 @@ const Todo = () => {
           value="Save"
           id="todoInputSave"
           className="todoButton"
+          onClick={addTodo}
         />
       </section>
 
       <section className="todoList">
         <h3>My todo list:</h3>
+
+        {
+          todoList.length > 0 ? (
+            <>
+              <ul>
+                {todoList.map((todo, i) => {
+                  return <li key={i}>{ todo }</li>
+                })}
+              </ul>
+            </>
+          ) : ''
+        }
       </section>
     </>
   )
