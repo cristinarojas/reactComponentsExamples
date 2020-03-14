@@ -1,5 +1,10 @@
+/*
+  React Hooks are something that let you write
+  Functional Components and still hook into class-based features and use them.
+*/
+
 // Dependencies
-import React,  { useContext, useState }  from 'react';
+import React,  { useContext, useState, useEffect }  from 'react';
 
 // Styles
 import './todo.css';
@@ -15,6 +20,17 @@ const Todo = () => {
   const [userValue, setUseValue] = useState("");
   const [todoList, setTodoList] = useState([]);
   const [errorMessage, setErrorMessage] = useState(false);
+
+  // Using the useEffect method
+  useEffect(() => {
+    console.log("x1") // Like componentDidMount
+
+    if (errorMessage) { // Like componentDidUpdate (with condition)
+      console.log("x2")
+    }
+
+  }, [errorMessage]) // This array clearly tells react that just call useEffect when fields in me has been changed.
+
 
   // Methods
   // Saving user value to local state
