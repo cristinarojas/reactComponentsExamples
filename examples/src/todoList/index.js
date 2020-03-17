@@ -38,21 +38,43 @@ const Todo = () => {
   useEffect(() => {
     console.log("x1") // Like componentDidMount
 
+    // To avoid the .then method mean I'm resolving the promise.
+    const fetchAsync = async () => {
+      if (!ready) {
+        // Request data using axios library
+        // Note: the time that takes to resolve the rquest is Pending state.
+        try {
+          const response = await axios.get('https://restcountries.eu/rest/v2/all'); // Fulfilled
+
+          setCountries(response.data);
+          setReady(true);
+
+        } catch (error) { // Rejected
+          console.log('error => ', error.message)
+        }
+      }
+    }
+
+    fetchAsync();
+
     // This works like componentDidMount, setting a local state to true
     // to execute this only the first time that the component was mounted
     // Note: this fix is because the array in the bottom is not empty.
-    if (!ready) {
-      // Request data using axios library
-      axios.get('https://restcountries.eu/rest/v2/all')
-        .then(res => {
-            setCountries(res.data);
-            //console.log(res.data)
-            setReady(true);
-        })
-        .catch(err => {
-            console.log(err.message);
-        })
-    }
+    // This way Axios is resolving with .then method.
+    // if (!ready) {
+    //   // Request data using axios library
+    //   const request = axios.get('https://restcountries.eu/rest/v2/all');
+    //   console.log('rquest =====>', request);
+    //
+    //   request.then(res => {
+    //       setCountries(res.data);
+    //       //console.log(res.data)
+    //       setReady(true);
+    //   })
+    //   .catch(err => {
+    //       console.log(err.message);
+    //   })
+    // }
 
     if (errorMessage) { // Like componentDidUpdate (with condition)
       console.log("x2")
@@ -99,11 +121,13 @@ const Todo = () => {
 
       // Filter the countries with the user value typed
       const results = countries.filter(country => country.name.toLowerCase().includes(value.toLowerCase()))
+      // callback is a function that pass as parameter.
 
       // Saving the final results into the local state
       setCountriesResults(results);
     }
   }
+
 
   return (
     <>
