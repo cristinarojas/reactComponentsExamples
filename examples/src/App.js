@@ -6,6 +6,7 @@ import TodoProvider from './contexts/todoContext';
 
 // Components
 import Todo from './todoList';
+import Toggle from './toggle';
 
 // Styles
 import './App.css';
@@ -20,6 +21,7 @@ function App() {
       <section>
         <TodoProvider>
           <Todo />
+          <Toggle />
         </TodoProvider>
       </section>
     </div>
